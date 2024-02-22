@@ -1,0 +1,91 @@
+#include <iostream>
+using namespace std;
+
+class players{
+protected:
+    string Name;
+    string PrefHand;
+    int Avg;
+public:
+    void setdetails(string name,string prefHand,int avg){
+        Name=name;
+        PrefHand=prefHand;
+        Avg=avg;
+    }
+    void getdetails(){
+        cout<<"Name--"<<Name<<endl;
+        cout<<"Preffered Hand--"<<PrefHand<<endl;
+        cout<<"Average--"<<Avg<<endl;
+    }
+    string getName(){
+        return Name;
+    }
+    void intro(){
+        cout<<"Name--"<<Name<<endl;
+        cout<<"Preffered Hand--"<<PrefHand<<endl;
+        cout<<"Average--"<<Avg<<endl;
+    }
+    virtual void hand(){
+        cout<<Name<<" can be a Left hand and a Right hand player"<<endl;
+    }
+    players(string name,string prefHand,int avg){
+        Name=name;
+        PrefHand=prefHand;
+        Avg=avg;
+    }
+};
+
+class testSelection: public players{
+  public:
+  string Origin;
+  testSelection(string name,string prefHand,int avg,string origin):players(name,prefHand,avg){
+      Origin=origin;
+  }
+  void selected(){
+      if(Avg>30){
+          cout<<Name <<" Selected For test cricket"<<" from "<<Origin<<endl;
+      }
+      else cout<<Name << " Not Selected"<< " are you from"<<Origin<<"?"<<endl;
+  }
+  void hand(){
+        cout<<Name<<" is a Left hand player"<<endl;
+    }
+};
+
+class goodOrBadCricker: public players{
+public:    
+  int Overall100;
+  goodOrBadCricker(string name,string prefHand,int avg, int overall100)
+    :players(name, prefHand, avg)
+  {
+    Overall100=overall100;
+  }
+  void areYouGoodCricketer(){
+      if(Overall100>29){
+          cout<<Name <<", You are a Talented Player"<<endl;
+      }
+      else cout<<Name <<", You could've been a good cricker if you were not from Bihar"<<endl;
+  }
+  void hand(){
+        cout<<Name<<" is a Right hand player"<<endl;
+    }
+};
+
+
+int main() {
+    testSelection raja= testSelection("Raja","Left",60,"Bihar");
+    // raja.selected();
+    goodOrBadCricker player=goodOrBadCricker("Bihari","right",89,47);
+    // player.areYouGoodCricketer();
+    // raja.hand();
+    // player.hand();
+    
+    // The Most common use of the polumorphism is when a parent class reference
+    // is use to refer to the child class
+    players *p1=&raja;
+    players *p2=&player;
+    p1->hand();
+    p2->hand();
+    
+    return 0;
+}
